@@ -6,7 +6,7 @@ if [ "$1" == "run" ]
 then
 	if [[ "$EUID" -ne "$(id -u minecraft)" ]]
 	then
-		echo "minecraft-server may only be run by the \"minecraft\" user"
+		echo "minecraft-server ne peut être exécuté que par l'utilisateur \"minecraft\""
 		echo "try:"
 		echo "	sudo -u minecraft minecraft-server <args>..."
 		exit 1
@@ -19,11 +19,11 @@ then
 		killing=true
 		if [ -n "$jpid" ]
 		then
-			echo "terminating java process $jpid"
+			echo "fin du processus java $jpid"
 			kill -15 "$jpid"
 			if kill -0 "$jpid"
 			then
-				echo "jpid not successfully terminated. waiting 3 seconds"
+				echo "jpid ne s'est pas terminé avec succès. attendre 3 secondes"
 				sleep 3s
 				kill -9 "$jpid"
 			fi
@@ -36,13 +36,13 @@ then
 	if [ -z "$server_name" ]
 	then
 		# run_id=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-		echo "No server name given. Exiting..."
+		echo "Aucun nom de serveur donné. Sortie..."
 		exit 1
 	fi
 
 	if [ ! -d "$server_home/servers/$server_name" ]
 	then
-		echo "server \"$server_name\" does not exist. A new server will be created with this name"
+		echo "le serveur \"$server_name\" n'existe pas. Un nouveau serveur sera créé avec ce nom"
 		mkdir -p "$server_home/servers/$server_name"
 	fi
 	chown -R minecraft:minecraft "$server_home/servers/$server_name"
@@ -61,22 +61,22 @@ then
 		wait $jpid
 		if $killing
 		then
-			echo "stopping server"
+			echo "arrêt du serveur"
 			exit
 		else
 			# Update the EULA
 			eula_path="$server_home/servers/$server_name/eula.txt"
 			sed -i '/eula=false/c\eula=true' "$eula_path"
 		fi
-		echo "java exited unexpectedly. restarting in 3 seconds"
+		echo "java s'est arrêté de manière inattendue. redémarrage en 3 secondes"
 		sleep 3s
-		echo "restarting java"
+		echo "redémarrage de Java"
 	done
 elif [ "$1" == "update" ]
 then
 	if [[ "$EUID" -ne 0 ]] && [[ "$EUID" -ne "$(id -u minecraft)" ]]
 	then
-		echo "You must be \"root\" or \"minecraft\" to update the server"
+		echo "Vous devez être \"root\" ou \"minecraft\" pour mettre à jour le serveur"
 		exit 1
 	fi
 
@@ -87,10 +87,10 @@ then
 	version=$(echo "$version_manifest" | jq -r ".latest.release")
 	if [ -z "$version" ]
 	then
-		echo "Could not find the latest version. You may not be connected to the internet"
+		echo "Impossible de trouver la dernière version. Vous n'êtes peut-être pas connecté à Internet"
 		exit 1
 	fi
-	echo "latest version is $version"
+	echo "La dernière version est: $version"
 
 	# Download latest version jar
 	url="https://s3.amazonaws.com/Minecraft.Download/versions/$version/minecraft_server.$version.jar"
@@ -98,10 +98,10 @@ then
 	wget "$url" -O "/tmp/minecraft-server.$version.jar" || rm -rf "/tmp/minecraft-server.$version.jar"
 	if [ ! -f "/tmp/minecraft-server.$version.jar" ]
 	then
-		echo "Unable to download new server jar"
+		echo "Impossible de télécharger le nouveau fichier jar du serveur"
 		exit 1
 	fi
-	echo "installing server jar..."
+	echo "installation du serveur.jar..."
 
 	# install latest.jar and latest.version to server home
 	mv "/tmp/minecraft-server.$version.jar" "$server_home/latest.jar"
@@ -117,9 +117,9 @@ then
 	fi
 elif [ -n "$1" ]
 then
-	echo "invalid command $1"
+	echo "Commande invalide: $1"
 	exit 1
 else
-	echo "you must enter a command"
+	echo "Vous devez entrer une commande"
 fi
 
