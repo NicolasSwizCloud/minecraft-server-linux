@@ -44,6 +44,7 @@ then
 	then
 		echo "le serveur \"$server_name\" n'existe pas. Un nouveau serveur sera créé avec ce nom"
 		mkdir -p "$server_home/servers/$server_name"
+		echo "eula=true" > $server_home/servers/$server_name/eula.txt
 	fi
 	chown -R minecraft:minecraft "$server_home/servers/$server_name"
 	if [ ! -f "$server_home/servers/$server_name/minecraft-server.jar" ]
