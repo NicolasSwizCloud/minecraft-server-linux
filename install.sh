@@ -2,7 +2,7 @@
 
 if [[ $EUID -ne 0 ]]
 then
-	>&2 echo "This script must be run as root"
+	>&2 echo "Ce script doit être exécuté en tant que root"
 	exit 1
 fi
 
@@ -10,7 +10,7 @@ server_home="/var/minecraft"
 
 while [ "$agree" != "y" ] && [ "$agree" != "n" ]
 do
-	read -p "Do you agree to the Minecraft EULA? (https://account.mojang.com/documents/minecraft_eula) (y/n): " agree
+	read -p "Acceptez-vous le CLUF Minecraft? (https://account.mojang.com/documents/minecraft_eula) (y/n): " agree
 done
 if [ "$agree" == "n" ] || [ "$agree" != "y" ]
 then
