@@ -93,7 +93,7 @@ then
 	echo "La dernière version est: $version"
 
 	# Download latest version jar
-	url="https://s3.amazonaws.com/Minecraft.Download/versions/$version/minecraft_server.$version.jar"
+	url="https://mcversions.net/download/$version"
 	echo "downloading latest jar from $url"
 	wget "$url" -O "/tmp/minecraft-server.$version.jar" || rm -rf "/tmp/minecraft-server.$version.jar"
 	if [ ! -f "/tmp/minecraft-server.$version.jar" ]
