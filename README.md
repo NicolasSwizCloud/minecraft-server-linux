@@ -3,7 +3,7 @@ This repo provides scripts to simplify installing and running a minecraft server
 
 ## Installing
 ```` bash
-git clone https://github.com/lufinkey/minecraft-server-linux
+git clone https://github.com/NicolasSwizCloud/minecraft-server-linux
 cd minecraft-server-linux
 sudo ./install.sh
 ````
